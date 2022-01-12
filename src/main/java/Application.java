@@ -24,7 +24,7 @@ public class Application {
         points = pointCSV.getPoints();
         AreaCartesiana area = new AreaCartesiana(returnNewGeoArea(4));
 
-        Missao misao = new Missao(HORIZONTAL_DIRECTION, FORWARD_MOVIMENT, Drone.buildMavicIIzoom(), Camera.buildMavicIIzoom(), area, 0.50, 16, 17, 1.0, 0.70);
+        Missao misao = new Missao(HORIZONTAL_DIRECTION, FORWARD_MOVIMENT, Drone.criaMavicIIzoom(), Camera.buildMavicIIzoom(), area, 0.50, 16, 17, 1.0, 0.70);
 
         Controlador controladorGeral = new Controlador(misao);
         controladorGeral.calculaRota();

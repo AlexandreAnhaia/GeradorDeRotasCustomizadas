@@ -4,44 +4,44 @@ import java.io.PrintStream;
 import java.util.Arrays;
 import java.util.LinkedList;
 
-import static Controladores.Controlador.calcComprimentoRota;
-import static Controladores.Controlador.transformGeoPoint;
+import static Controladores.Controlador.calculaComprimentoRota;
+import static Controladores.Controlador.convertePontosGeograficos;
 import static entidades.Missao.HORIZONTAL_DIRECTION;
 
 public class Rota {
 
-    public final LinkedList<PontoCartesiano> route;
-    public final LinkedList<PontoGeografico> geoRoute;
-    public final double routeLenght;
-    public final long numberPictures;
-    public final double flightTime;
-    public final double picturesPerSecond;
-    public final double velocityPictures;
-    public final double velocityCruiser;
+    public final LinkedList<PontoCartesiano> rota;
+    public final LinkedList<PontoGeografico> rotaGeografica;
+    public final double comprimentoRota;
+    public final long numeroFotos;
+    public final double tempoVoo;
+    public final double fotosPorSegundo;
+    public final double velocidadeFotos;
+    public final double velocidadeCruzeiro;
 
-    public Rota(LinkedList<PontoCartesiano> route, Missao missao) {
-        this.route = route;
-        this.geoRoute = transformGeoPoint(route, missao.area.geo.home);
-        this.routeLenght = calcComprimentoRota(route);
+    public Rota(LinkedList<PontoCartesiano> rota, Missao missao) {
+        this.rota = rota;
+        this.rotaGeografica = convertePontosGeograficos(rota, missao.area.areaGeografica.pontoInicial);
+        this.comprimentoRota = calculaComprimentoRota(rota);
 
-        if (missao.direction == HORIZONTAL_DIRECTION) {
-            numberPictures = Math.round(routeLenght / (missao.width * (1 - missao.sobrePosicao)));
+        if (missao.direcao == HORIZONTAL_DIRECTION) {
+            numeroFotos = Math.round(comprimentoRota / (missao.largura * (1 - missao.sobrePosicao)));
 
-            velocityPictures = this.routeLenght / (this.numberPictures * missao.cam.min_interval_pictures);
+            velocidadeFotos = this.comprimentoRota / (this.numeroFotos * missao.camera.min_interval_pictures);
             //velocityCruiser = ((int)min(mission.drone.velocityEficiente / 3.6, mission.velocityShutter, this.velocityPictures)*36)/36.0;
-            velocityCruiser = ((int) (min(missao.drone.velocityEficiente / 3.6, missao.velocityShutter, this.velocityPictures) * 10)) / 10.0;
+            velocidadeCruzeiro = ((int) (min(missao.drone.velocidadeEficiente / 3.6, missao.velocidadeObturador, this.velocidadeFotos) * 10)) / 10.0;
 
-            flightTime = (routeLenght / velocityCruiser);
-            picturesPerSecond = numberPictures / flightTime;
+            tempoVoo = (comprimentoRota / velocidadeCruzeiro);
+            fotosPorSegundo = numeroFotos / tempoVoo;
         } else {
-            numberPictures = Math.round(routeLenght / (missao.height * (1 - missao.sobrePosicao)));
+            numeroFotos = Math.round(comprimentoRota / (missao.altura * (1 - missao.sobrePosicao)));
 
-            velocityPictures = this.routeLenght / (this.numberPictures * missao.cam.min_interval_pictures);
+            velocidadeFotos = this.comprimentoRota / (this.numeroFotos * missao.camera.min_interval_pictures);
             //velocityCruiser = ((int)min(mission.drone.velocityEficiente / 3.6, mission.velocityShutter, this.velocityPictures)*36)/36.0;
-            velocityCruiser = ((int) (min(missao.drone.velocityEficiente / 3.6, missao.velocityShutter, this.velocityPictures) * 10)) / 10.0;
+            velocidadeCruzeiro = ((int) (min(missao.drone.velocidadeEficiente / 3.6, missao.velocidadeObturador, this.velocidadeFotos) * 10)) / 10.0;
 
-            flightTime = (routeLenght / velocityCruiser);
-            picturesPerSecond = numberPictures / flightTime;
+            tempoVoo = (comprimentoRota / velocidadeCruzeiro);
+            fotosPorSegundo = numeroFotos / tempoVoo;
         }
     }
 
@@ -57,7 +57,7 @@ public class Rota {
         out.println("<tessellate>1</tessellate>");
         out.println("<altitudeMode>relativeToGround</altitudeMode>");
         out.println("<coordinates>");
-        out.println(this.geoRoute.stream().map(e -> e.toString()).reduce(String::concat).get());
+        out.println(this.rotaGeografica.stream().map(e -> e.toString()).reduce(String::concat).get());
         out.println("</coordinates>");
         out.println("</LineString>");
         out.println("</Placemark>");

@@ -21,11 +21,6 @@ public class PontoCSV {
 
     public void loader(String arquivoCSV) {
 
-
-        //String arquivoCSV = "./2019-10-29_11-09-04_v2.csv";
-        //arquivoCSV = "./2019-10-30_10-20-06_v2.csv";
-
-
         BufferedReader bufferedReader;
         String linha;
         int contador = 0;
@@ -39,7 +34,7 @@ public class PontoCSV {
             while ((linha = bufferedReader.readLine()) != null) {
                 linha = linha + " ,";
 
-                String[] colunas = linha.contains(";")? linha.split(";") : linha.split(",");
+                String[] colunas = linha.contains(";") ? linha.split(";") : linha.split(",");
 
 
                 if (anterior == 0 && Integer.parseInt(colunas[ISTAKINGFOTO]) == 1) {
