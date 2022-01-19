@@ -32,11 +32,23 @@ public class Camera {
         this.min_interval_pictures = min_interval_pictures;
     }
 
-    public static Camera buildMavicProI() {
+    public static Camera criaMavicPro1() {
         return new Camera(78.8, 59.1, 4000.0, 3000.0, 1.0, 1.0 / 8000.0, 6.17, 4.5, 28.0, 2.0);
     }
 
-    public static Camera buildMavicIIzoom() {
+    public static Camera criaMavic2zoom() {
         return new Camera(78.8, 59.1, 4000.0, 3000.0, 2.0, 1.0 / 8000.0, 6.17, 4.5, 28.0, 2.0);
+    }
+
+    public static Camera retornaCamera(String camera) {
+        switch (camera) {
+            case "Mavic2Zoom":
+                return criaMavic2zoom();
+            case "MavicPro1":
+                return criaMavicPro1();
+            default:
+                System.out.println("Necessário escolher uma camera para criar a rota customizada");
+                return null;
+        }
     }
 }

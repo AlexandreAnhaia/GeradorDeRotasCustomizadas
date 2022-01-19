@@ -1,0 +1,12 @@
+{
+    "pontosPreMissao": 4,
+    "direcao": 1,
+    "movimento": 3,
+    "droneString": "Mavic2Zoom",
+    "cameraString": "Mavic2Zoom",
+    "blurFactor": 0.50,
+    "tamanhoCartaoSD": 16,
+    "distanciaFotos": 17,
+    "zoom": 1.0,
+    "sobreposicao": 0.70
+}

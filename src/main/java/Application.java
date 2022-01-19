@@ -1,34 +1,60 @@
 import Controladores.Controlador;
+import com.google.gson.Gson;
 import entidades.*;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.text.ParseException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Locale;
-
-import static entidades.Missao.FORWARD_MOVIMENT;
-import static entidades.Missao.HORIZONTAL_DIRECTION;
 
 public class Application {
 
     public static ArrayList<PontoGeografico> points = new ArrayList<>();
 
-    public static void main(String[] args) throws IOException, ParseException {
+    public void criaMissao() throws IOException {
         Locale.setDefault(Locale.ENGLISH);
-
         String arquivoCSV = "2019-12-12_16-43-51_v2-barragem-montante.csv";
+        Config configuracao = null;
+
+        try {
+            String json = String.join(" ", Files.readAllLines(Paths.get("./configuracao.json"), StandardCharsets.UTF_8));
+            configuracao = new Gson().fromJson(json, Config.class);
+        }
+        //Trata as exceptions que podem ser lançadas no decorrer do processo
+        catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        configuracao.setCameraObjeto(Camera.retornaCamera(configuracao.getCameraString()));
+        configuracao.setDroneObjeto(Drone.retornaDrone(configuracao.getDroneString()));
 
         PontoCSV pointCSV = new PontoCSV();
         pointCSV.loader(arquivoCSV);
         points = pointCSV.getPoints();
-        AreaCartesiana area = new AreaCartesiana(returnNewGeoArea(4));
+        AreaCartesiana area = new AreaCartesiana(returnNewGeoArea(configuracao.getPontosPreMissao()));
 
-        Missao misao = new Missao(HORIZONTAL_DIRECTION, FORWARD_MOVIMENT, Drone.criaMavicIIzoom(), Camera.buildMavicIIzoom(), area, 0.50, 16, 17, 1.0, 0.70);
+        Missao missao = new Missao(
+                configuracao.getDirecao(),
+                configuracao.getMovimento(),
+                configuracao.getDroneObjeto(),
+                configuracao.getCameraObjeto(),
+                area,
+                configuracao.getBlurFactor(),
+                configuracao.getTamanhoCartaoSD(),
+                configuracao.getDistanciaFotos(),
+                configuracao.getZoom(),
+                configuracao.getSobreposicao());
 
-        Controlador controladorGeral = new Controlador(misao);
+        Controlador controladorGeral = new Controlador(missao);
         controladorGeral.calculaRota();
     }
+
 
     public static AreaGeografica returnNewGeoArea(int pre) {
         PontoGeografico home = null;
