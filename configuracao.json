@@ -1,9 +1,10 @@
 {
+    "arquivo": "2019-12-12_16-43-51_v2-barragem-montante",
     "pontosPreMissao": 4,
     "direcao": 1,
     "movimento": 3,
-    "droneString": "Mavic2Zoom",
-    "cameraString": "Mavic2Zoom",
+    "drone": "Mavic2Zoom",
+    "camera": "Mavic2Zoom",
     "blurFactor": 0.50,
     "tamanhoCartaoSD": 16,
     "distanciaFotos": 17,

@@ -17,7 +17,6 @@ public class Application {
 
     public void criaMissao() throws IOException {
         Locale.setDefault(Locale.ENGLISH);
-        String arquivoCSV = "2019-12-12_16-43-51_v2-barragem-montante.csv";
         Config configuracao = null;
 
         try {
@@ -30,9 +29,9 @@ public class Application {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        configuracao.setCameraObjeto(Camera.retornaCamera(configuracao.getCameraString()));
-        configuracao.setDroneObjeto(Drone.retornaDrone(configuracao.getDroneString()));
+        String arquivoCSV = configuracao.getArquivo() + ".csv";
+        configuracao.setCameraObjeto(Camera.retornaCamera(configuracao.getCamera()));
+        configuracao.setDroneObjeto(Drone.retornaDrone(configuracao.getDrone()));
 
         PontoCSV pointCSV = new PontoCSV();
         pointCSV.loader(arquivoCSV);

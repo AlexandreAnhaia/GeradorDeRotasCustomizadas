@@ -6,15 +6,16 @@ public class Config {
     private int pontosPreMissao = -1;
     private int direcao = 0;
     private int movimento = 0;
-    private String droneString;
+    private String drone;
     private Drone droneObjeto;
-    private String cameraString;
+    private String camera;
     private Camera cameraObjeto;
     private double blurFactor = 0;
     private double tamanhoCartaoSD = 0;
     private double distanciaFotos = 0;
     private double zoom = 0;
     private double sobreposicao = 0;
+    private String arquivo;
 
     public int getPontosPreMissao() {
         return pontosPreMissao;
@@ -40,12 +41,12 @@ public class Config {
         this.movimento = movimento;
     }
 
-    public String getDroneString() {
-        return droneString;
+    public String getDrone() {
+        return drone;
     }
 
     public void setDroneString(String droneString) {
-        this.droneString = droneString;
+        this.drone = droneString;
     }
 
     public Drone getDroneObjeto() {
@@ -56,12 +57,12 @@ public class Config {
         this.droneObjeto = droneObjeto;
     }
 
-    public String getCameraString() {
-        return cameraString;
+    public String getCamera() {
+        return camera;
     }
 
     public void setCameraString(String cameraString) {
-        this.cameraString = cameraString;
+        this.camera = cameraString;
     }
 
     public Camera getCameraObjeto() {
@@ -111,4 +112,14 @@ public class Config {
     public void setSobreposicao(double sobreposicao) {
         this.sobreposicao = sobreposicao;
     }
+
+
+    public String getArquivo() {
+        return arquivo;
+    }
+
+    public void setArquivo(String arquivo) {
+        this.arquivo = arquivo;
+    }
+
 }
