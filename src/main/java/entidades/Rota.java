@@ -49,6 +49,11 @@ public class Rota {
         return Arrays.stream(args).min().getAsDouble();
     }
 
+    /**
+     * Cria o arquivo no formato KML para poder ser visualizado com o auxílio de um software.
+     * @param out
+     * @param name
+     */
     public void saveKml(PrintStream out, String name) {
         out.println("<Placemark>");
         out.println("<name>" + name + "</name>");

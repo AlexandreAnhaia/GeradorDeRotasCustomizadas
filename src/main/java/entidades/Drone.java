@@ -12,26 +12,51 @@ public class Drone {
         this.velocidadeEficiente = efficientVelocity;
     }
 
+    /**
+     * Construtor do Objeto Drone, que possui as características padrão do drone Mavic Pro I;
+     * @return Objeto Drone
+     */
     public static Drone criaMavicProI() {
         return new Drone(743.0, 24.0, 0.3, 32.5);
     }
 
+    /**
+     * Construtor do Objeto Drone, que possui as características padrão do drone Mavic II Zoom;
+     * @return Objeto Drone
+     */
     public static Drone criaMavicIIzoom() {
         return new Drone(905.0, 30.0, 0.3, 32.0);
     }
 
+    /**
+     * Construtor do Objeto Drone, que possui as características padrão do drone Phantom 4 Pro V2;
+     * @return Objeto Drone
+     */
     public static Drone criaPhantom4ProV2() {
         return new Drone(1375.0, 21.0, 0.3, 36.0);
     }
 
+    /**
+     * Construtor do Objeto Drone, que possui as características padrão do drone Phantom 4 Pro;
+     * @return Objeto Drone
+     */
     public static Drone criaPhantom4Pro() {
         return new Drone(1388.0, 21.0, 0.3, 36.0);
     }
 
+    /**
+     * Construtor do Objeto Drone, que possui as características padrão do drone Phantom 4 Advanced;
+     * @return Objeto Drone
+     */
     public static Drone criaPhantom4Advanced() {
         return new Drone(1368.0, 21.0, 0.3, 36.0);
     }
 
+    /**
+     * Método auxiliar do arquivo de configuração JSON;
+     * @param drone Modelo de drone a ser escolhido para a missão
+     * @return Objeto Drone
+     */
     public static Drone retornaDrone(String drone) {
         switch (drone) {
             case "Mavic2Zoom":

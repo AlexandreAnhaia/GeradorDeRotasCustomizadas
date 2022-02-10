@@ -21,6 +21,12 @@ public class Controlador {
         this.missao = missao;
     }
 
+    /**
+     * Transforma os pontos geográficos da missão em pontos cartesianos, em metros como unidade de medida, para poder ser calculada a rota
+     * Após isso, é calculado os pontos da rota com base no número de voltas necessárias para mapear a área completa. Por fim, os pontos cartesianos que estão na unidade de medida
+     * em metros é retornado para pontos geográficos e adicionados na lista final (Rota completa).
+     * @return Objeto Rota
+     */
     private Rota calculaRotaCompleta() {
         AreaCartesiana area = missao.area;
 
@@ -158,6 +164,13 @@ public class Controlador {
         return result;
     }
 
+    /**
+     * Transforma os pontos geográficos da missão em pontos cartesianos, em metros como unidade de medida, com o objetivo de calcular a Rota ou uma parte da rota Total. Esse método
+     * pode calcula se a rota total vai precisar ser dividida em mais de uma rota. Por fim, após os cálculos realizados, os pontos cartesianos que estão em metros é retornado para pontos
+     * geográficos e adionados na(s) lista(s) (Rota(s)).
+     * @throws FileNotFoundException
+     * @throws IOException
+     */
     public void calculaRota() throws FileNotFoundException, IOException {
         Rota rota = calculaRotaCompleta();
 
@@ -342,6 +355,12 @@ public class Controlador {
         out.println("</Placemark>");
     }
 
+    /**
+     * Faz a criação do arquivo do tipo KML, para poder visualizara  rota completa através do Google Earth.
+     * @param rotas
+     * @param missao
+     * @throws FileNotFoundException
+     */
     public static void salvaKml(LinkedList<Rota> rotas, Missao missao) throws FileNotFoundException {
         PrintStream out = new PrintStream("./novo.kml");
         out.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
@@ -370,6 +389,12 @@ public class Controlador {
         out.close();
     }
 
+    /**
+     * Transforma os pontos cartesianos em pontos geográficos.
+     * @param route
+     * @param home
+     * @return
+     */
     public static LinkedList<PontoGeografico> convertePontosGeograficos(LinkedList<PontoCartesiano> route, PontoGeografico home) {
         LinkedList<PontoGeografico> rotaFinal = new LinkedList<>();
         for (PontoCartesiano elemento : route) {
@@ -416,6 +441,11 @@ public class Controlador {
         return heading;
     }
 
+    /**
+     * Calcula o comprimento total da rota ou o comprimento total de cada sub-rota.
+     * @param route
+     * @return
+     */
     public static double calculaComprimentoRota(LinkedList<PontoCartesiano> route) {
         double comprimentoTotal = 0;
         PontoCartesiano corrente = route.getFirst();
@@ -426,6 +456,13 @@ public class Controlador {
         return comprimentoTotal;
     }
 
+    /**
+     * Cria as sub-rotas, caso seja necessário dividir a rota completa em mais de uma rota.
+     * @param route
+     * @param beguinIndex
+     * @param endIndex
+     * @return
+     */
     public static LinkedList<PontoCartesiano> criaSubRota(LinkedList<PontoCartesiano> route, int beguinIndex, int endIndex) {
         LinkedList<PontoCartesiano> resultado = new LinkedList<>();
 
@@ -435,6 +472,12 @@ public class Controlador {
         return resultado;
     }
 
+    /**
+     * Verifica o tamanho de cada sub-rota e cálcula o número de pontos de cada sub-rota.
+     * @param route
+     * @param numeroMissoes
+     * @return
+     */
     public static LinkedList<Integer> splitIndex(LinkedList<PontoCartesiano> route, int numeroMissoes) {
         int size = (int) Math.floor(route.size() / numeroMissoes);
         LinkedList<Integer> resultado = new LinkedList<>();
@@ -445,12 +488,24 @@ public class Controlador {
         return resultado;
     }
 
+    /**
+     * Transforma pontos geográficos em pontos cartesianos.
+     * @param geoPoint
+     * @param home
+     * @return
+     */
     public static PontoCartesiano converteParaCartesiano(PontoGeografico geoPoint, PontoGeografico home) {
         PontoCartesiano cartesianPointResultado = new PontoCartesiano(calculaX(geoPoint.longitude, home.longitude, home.latitude),
                 calculaY(geoPoint.latitude, home.latitude), geoPoint.altura);
         return cartesianPointResultado;
     }
 
+    /**
+     * Transforma pontos cartesianos em pontos geográficos.
+     * @param cartesianPoint
+     * @param home
+     * @return
+     */
     public static PontoGeografico converteParaPontoGeografico(PontoCartesiano cartesianPoint, PontoGeografico home) {
         PontoGeografico geoPoint = new PontoGeografico(
                 calculaLongitudeX(home.latitude, home.longitude, cartesianPoint.x),
@@ -460,46 +515,105 @@ public class Controlador {
         return geoPoint;
     }
 
+    /**
+     * Calcula a coordenada Y, em metros, de um ponto qualquer do planeta Terra com base a uma coordenada geográfica
+     * @param latitude é o ponto do qual se deseja calcular para cartesiano
+     * @param latitudeBarra é o ponto de referência
+     * @return
+     */
     private static double calculaY(double latitude, double latitudeBarra) {
         double resultado = (latitude - latitudeBarra) * (10000000.0 / 90);
         return resultado;
     }
 
+    /**
+     * Calcula a coordenada X, em metros, de um ponto qualquer do planeta Terra com base a uma coordenada geográfica.
+     * @param longitude é o ponto do qual se deseja calcular para cartesiano
+     * @param longitudeBarra é a longitude do ponto de referência
+     * @param latitudeBarra é a latitude do ponto de referêcia
+     * @return
+     */
     private static double calculaX(double longitude, double longitudeBarra, double latitudeBarra) {
         double resultado = (longitude - longitudeBarra) * (6400000.0 * (Math.cos(latitudeBarra * PI / 180) * 2 * PI / 360));
         return resultado;
     }
 
+    /**
+     * Calcula a latitude geográfica de um ponto
+     * @param latitudeBarra é a latitude do ponto de referência
+     * @param y é a latitude em cartesiano
+     * @return
+     */
     private static double calculaLatitudeY(double latitudeBarra, double y) {
         double resultado = ((y * 90) / 10000000.0) + latitudeBarra;
         return resultado;
     }
 
+    /**
+     * Calcula a longitude geográfica de um ponto
+     * @param latitudeBarra é a latitude do ponto de referência
+     * @param longitudeBarra é a longitude do ponto de referência
+     * @param x longitude em cartesiano
+     * @return
+     */
     private static double calculaLongitudeX(double latitudeBarra, double longitudeBarra, double x) {
         double resultado = ((x * 90) / (10008000 * Math.cos(latitudeBarra * PI / 180))) + longitudeBarra;
         return resultado;
     }
 
+    /**
+     * Calcula a largura da foto com base na distância da foto e da abertura da câmera
+     * @param distanciaFoto
+     * @param aberturaCamera
+     * @return
+     */
+
+    /**
+     *
+     * @param distanciaFoto
+     * @param aberturaCamera
+     * @return
+     */
     public static double photoLengthOnGround(double distanciaFoto, double aberturaCamera) {
         double resultado = 2 * distanciaFoto * Math.tan((aberturaCamera / 2) * PI / 180);
         return resultado;
     }
 
+    /**
+     * Calcula a distância da foto divido pela distância do foco(propriedade da câmera).
+     * @param missao
+     * @return
+     */
     public static double calculaDenEscala(Missao missao) {
         double resultado = missao.distanciaFoto / (missao.camera.distanceFocus * Math.pow(10, -3));
         return resultado;
     }
 
+    /**
+     * Calcula a área X da imagem
+     * @param missao
+     * @return
+     */
     public static double calculaSensorX(Missao missao) {
         double resultado = missao.camera.sensorX / missao.camera.resolutionW;
         return resultado;
     }
 
+    /**
+     * Calcula a área Y da imagem
+     * @param missao
+     * @return
+     */
     public static double calculaSensorY(Missao missao) {
         double resultado = missao.camera.sensorY / missao.camera.resolutionH;
         return resultado;
     }
 
+    /**
+     * Faz a comparação do X e do Y da imagem e retorn o menor dos valores
+     * @param missao
+     * @return
+     */
     public static double calculaTam(Missao missao) {
         double numberOne = calculaSensorX(missao);
         double numberTwo = calculaSensorY(missao);
@@ -507,6 +621,11 @@ public class Controlador {
         return resultado;
     }
 
+    /**
+     * Calcula a precisão em milimetros por cada pixel da imagem, através do valor do DenEscala multiplicado pelo Tam.
+     * @param missao
+     * @return
+     */
     public static double calcGSD(Missao missao) {
         double denEscala = calculaDenEscala(missao);
         double tam = calculaTam(missao);

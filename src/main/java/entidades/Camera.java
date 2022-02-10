@@ -32,14 +32,27 @@ public class Camera {
         this.min_interval_pictures = min_interval_pictures;
     }
 
-    public static Camera criaMavicPro1() {
+    /**
+     * Construtor do objeto Camera que possui características padrão da câmera do Mavic Pro modelo I
+     * @return Objeto Camera
+     */
+    private static Camera criaMavicPro1() {
         return new Camera(78.8, 59.1, 4000.0, 3000.0, 1.0, 1.0 / 8000.0, 6.17, 4.5, 28.0, 2.0);
     }
 
-    public static Camera criaMavic2zoom() {
+    /**
+     * Construtor do objeto Camera que possui características padrão da câmera do Mavic II Zoom
+     * @return Obeto Camera
+     */
+    private static Camera criaMavic2zoom() {
         return new Camera(78.8, 59.1, 4000.0, 3000.0, 2.0, 1.0 / 8000.0, 6.17, 4.5, 28.0, 2.0);
     }
 
+    /**
+     * Método auxiliar do arquivo de configuração JSON da missão
+     * @param camera Modelo da câmera escolhida para a missão;
+     * @return Objeto Camera
+     */
     public static Camera retornaCamera(String camera) {
         switch (camera) {
             case "Mavic2Zoom":

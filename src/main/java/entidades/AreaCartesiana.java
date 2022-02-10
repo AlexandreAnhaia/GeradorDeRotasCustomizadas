@@ -30,12 +30,28 @@ public class AreaCartesiana {
 
     }
 
+    /**
+     * Calcula o tamanho da parte frontal da área de interesse a ser mapeada.
+     * @param p1 ponto 1 da área de interesse
+     * @param p2 ponto 2 da área de interesse
+     * @param p3 ponto 3 da área de interesse
+     * @param p4 ponto 4 da área de interesse
+     * @return
+     */
     private static double calculaHipotenusa(PontoCartesiano p1, PontoCartesiano p2, PontoCartesiano p3, PontoCartesiano p4) {
         PontoCartesiano h1 = p4.minus(p1);
         PontoCartesiano h2 = p3.minus(p2);
         return Math.max(h1.norm(), h2.norm());
     }
 
+    /**
+     * Calcula o comprimento da base, com base nos quatros pontos da área a ser mapeada.
+     * @param p1 ponto 1 da área de interesse
+     * @param p2 ponto 2 da área de interesse
+     * @param p3 ponto 3 da área de interesse
+     * @param p4 ponto 4 da área de interesse
+     * @return
+     */
     private double calculaComprimentoBase(PontoCartesiano p1, PontoCartesiano p2, PontoCartesiano p3, PontoCartesiano p4) {
         PontoCartesiano h1 = p4.minus(p3);
         PontoCartesiano h2 = p1.minus(p2);

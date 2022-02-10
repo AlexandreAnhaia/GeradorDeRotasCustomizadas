@@ -16,7 +16,7 @@ public class PontoCSV {
     private final int LATITUDE = 0;
     private final int LONGITUDE = 1;
     private final int ALTITUDE = 2;
-    private final int DATETIMELOCAL = 12;
+    //private final int DATETIMELOCAL = 12;
     private final int ISTAKINGFOTO = 27;
 
     public void loader(String arquivoCSV) {

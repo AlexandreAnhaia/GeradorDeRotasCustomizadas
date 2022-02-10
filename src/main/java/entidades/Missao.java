@@ -64,11 +64,25 @@ public class Missao {
         }
     }
 
-    private static int calculaNumeroVoltas(double hipoenusa, double largura, double sobrePosicao) {
-        int resultado = (int) (0.8 + hipoenusa / (largura * (1 - sobrePosicao)));
+    /**
+     * Calcula o número total de voltas com base nas informações passadas como parâmetro
+     * @param hipotenusa
+     * @param largura
+     * @param sobrePosicao
+     * @return
+     */
+    private static int calculaNumeroVoltas(double hipotenusa, double largura, double sobrePosicao) {
+        int resultado = (int) (0.8 + hipotenusa / (largura * (1 - sobrePosicao)));
         return resultado + 1;
     }
 
+    /**
+     * Calcula a largura da foto, com base na distância e na abertura da câmera
+     * @param distanciaFoto
+     * @param aberturaCamera
+     * @param zoom
+     * @return
+     */
     public static double photoLengthOnGround(double distanciaFoto, double aberturaCamera, double zoom) {
         double resultado = 2 * distanciaFoto * Math.tan((aberturaCamera / (2 * zoom)) * Math.PI / 180);
         return resultado;
