@@ -27,7 +27,6 @@ public class AreaCartesiana {
         this.posMissao = area.posMissao.stream().map(gp -> converteParaCartesiano(gp, area.pontoInicial)).toArray(PontoCartesiano[]::new);
         this.hipotenusa = calculaHipotenusa(ponto1, ponto2, ponto3, ponto4);
         this.comprimentoBase = calculaComprimentoBase(ponto1, ponto2, ponto3, ponto4);
-
     }
 
     /**

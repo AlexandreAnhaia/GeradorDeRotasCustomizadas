@@ -308,36 +308,6 @@ public class Controlador {
                 } else {
                     throw new IllegalStateException("Isso nao deveria ser possivel, reveja as codiçoes nos if's acima");
                 }
-                /*if (i == 0) {
-                    //primeiro ponto da rota (home), deve mudar o angulo da camera para -15 graus e direcionar o drone para o proximo ponto da rota 
-                    addRowLitchCsv(out, pontoGeografico.latitude, pontoGeografico.longitude, 2, headingRoute, 1.0, 0, new Action(ACTION_TILT_CAM, -15));
-                } else if (i <= mission.area.pre_mission.length) {
-                    //todos os pontos do pre mission devem manter o drone direcionado para a rota
-                    addRowLitchCsv(out, pontoGeografico.latitude, pontoGeografico.longitude, pontoGeografico.altura, headingRoute, 5.0, 0);
-                } else if (i == mission.area.pre_mission.length + 1) {
-                    //no primeiro ponto da missão deve-se mudar o angulo da camera e a direção do drone no ideal para as fotos da missao, 
-                    addRowLitchCsv(out, pontoGeografico.latitude, pontoGeografico.longitude, pontoGeografico.altura, headingMission, speed, photho_interval,
-                            new Action(ACTION_TILT_CAM, mission.camPitch), new Action(ACTION_STAY_FOR, 5 * 1000), new Action(ACTION_TAKE_PHOTO, -1));
-
-                } else if (i > mission.area.pre_mission.length + 1 && i < route.geoRoute.size() - 2 - mission.area.pos_mission.length) {
-                    //em todos os pontos seguintes da missão, o drone deve manter-se na drireção ideal de fotos continuando a navegacao
-                    addRowLitchCsv(out, pontoGeografico.latitude, pontoGeografico.longitude, pontoGeografico.altura, headingMission, speed, photho_interval);
-                } else if (i == route.geoRoute.size() - 2 - mission.area.pos_mission.length) {
-                    //no ultimo ponto da missão o drone deve colocar a camera em -15 graus  e direcionar o drone para a rota de volta 
-                    addRowLitchCsv(out, pontoGeografico.latitude, pontoGeografico.longitude, pontoGeografico.altura, headingMission, speed, photho_interval);
-                    addRowLitchCsv(out, pontoGeografico.latitude, pontoGeografico.longitude, pontoGeografico.altura+1, headingRoute, 5.0, 0, new Action(ACTION_TILT_CAM, -15));
-                } else if (i < route.geoRoute.size() - 2) {
-                    //em todos os pontos do pos mission o drone deve estar direcionado para a rota
-                    addRowLitchCsv(out, pontoGeografico.latitude, pontoGeografico.longitude, pontoGeografico.altura, headingRoute, 5.0, 0);
-                } else if (i == route.geoRoute.size() - 2) {
-                    //no ultimo ponto do pos mission o drone deve estar direcionado para a rota e movimentar-se devagar
-                    addRowLitchCsv(out, pontoGeografico.latitude, pontoGeografico.longitude, pontoGeografico.altura, headingRoute, 1.0, 0);
-                } else if (i == route.geoRoute.size() - 1) {
-                    //quando o drone chegar no home, este der girar e em seguida executar o landing
-                    addRowLitchCsv(out, pontoGeografico.latitude, pontoGeografico.longitude, 2, 0, 1.0, 0, new Action(ACTION_ROTATE_DRONE, 180));
-                } else {
-                    throw new IllegalStateException("Isso nao deveria ser possivel, reveja as codiçoes nos if's acima");
-                }*/
             }
             out.close();
         }
